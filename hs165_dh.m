@@ -1,26 +1,21 @@
-function dh=hi5_dh(varargin)
-% create PUMA560 DH table (angles are in degree)
+function dh=hs165_dh(varargin)
+% create HS150 DH table (angles are in degree)
 % Usage: dh=puma_dh(options)
 %    'perr' - position error magnitude (mm)  (i.e. 0.5mm)
 %    'aerr' - angular error offset (degree)  (i.e. 0.2 degree)
 
 %create DH table
 %     a    d    alpha
-% dh=[ 200   360    90     -180  180;...
-%      560    0     0      -180  180;...
-%      130    0     90     -180  180;...
-%       0     620    -90     -180  180;...
-%       0     0     90     -180  180;...
-%       0    100    90      -360  360];
-dh=[0   360 0    -180 180;
-    200 0   90   -180 180;
-    560 0   0    -180 180;
-    130 0   90   -180 180;
-    0   620 -90  -180 180;
-    
-  
+dh=[  700  312  90  -180  180;...
+     1100    0   0  -180  180;...
+      230    0  90  -180  180;...
+        0 1250 -90  -180  180;...
+        0    0  90  -180  180;...
+        0  229   0  -360  360;];
+
   perr=0;
   aerr=0;
+  
   
   options=opt_parser(varargin);
   if options.isKey('perr')

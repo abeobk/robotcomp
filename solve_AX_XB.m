@@ -33,7 +33,7 @@ function X=solve_AX_XB(As,Bs)
     M1 = U*S1*V';
 
     %Compute r_X
-    r_X = M1*M'
+    r_X = M1*M';
 
     
     %Compute t_X
@@ -53,6 +53,7 @@ function X=solve_AX_XB(As,Bs)
     Ctd = Ct*d;
     t_X=inv(CtC)*Ctd;
     X = eye(4,4);
+    
     X(1:3,1:3)=r_X;
     X(1:3,4)=t_X;    
 end

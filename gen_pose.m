@@ -23,7 +23,7 @@ function P = gen_pose(range,step,rot_cnt, varargin)
     options=opt_parser(varargin);
     
     if options.isKey('ascl')
-        ascl=options('ascl')
+        ascl=options('ascl');
     end
 
     

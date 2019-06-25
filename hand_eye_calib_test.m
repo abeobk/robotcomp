@@ -3,32 +3,33 @@ clear all;
 close all;
 
 
-model_angular_err = 1;
-model_position_err= 5;
+
+model_angular_err = 0.5; %0.5 degree error
+model_position_err= 1;   %1mm link error
+
+robot_t_dh = puma_dh()
+robot_a_dh = puma_dh('perr',model_position_err, 'aerr', model_angular_err)
 
 
 %create theoretical model
-robot_t = create_robot_model(puma_dh(),...
-    'deg',true)
+robot_t = create_robot_model(robot_t_dh,'deg',true)
 
 %create actual model
-robot_a = create_robot_model(...
-     puma_dh('perr',model_position_err,...
-    'aerr',model_angular_err),...
-    'deg',true)
+robot_a = create_robot_model(robot_a_dh,'deg',true)
+
 
 %Data ranges
-range=[200  600;... %x range
-       -200  200;... %y range
-       100   500];   %z range
+range=[ 300  600;... %x range
+       -100  100;... %y range
+       500   600];   %z range
     
 %Data step
-step=[50 50 50];    %x,y,z resolution
+step=[100 100 100];    %x,y,z resolution
 
 %generate desired pose data
 Pd = gen_pose(range,step,...
-             3,...            % generate 3 poses for each pos
-            'ascl',1);        % random angle factor = 0.5
+              3,...             % generate 3 poses for each pos
+              'ascl',1);        % random angle factor = 0.5
         
 %calculate actual pose
 [Pt, Pa]=calc_actual_pose(robot_t,... %theoretical model
@@ -98,6 +99,8 @@ hold on;
 scatter3(P_b(:,4)*r2d,P_b(:,5)*r2d,P_b(:,6)*r2d,'.');
 scatter3(P_b_mean(:,4)*r2d,P_b_mean(:,5)*r2d,P_b_mean(:,6)*r2d,'o');
 title('Board orientation');
+
+pause
 
 %Prepare training data
 %normalize data
